@@ -1,34 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import "./App.css";
+import StartPage from "./components/StartPage";
+import Question from "./components/Question";
+import Answer from "./components/Answer";
+import { nanoid } from "nanoid";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [start, setStart] = useState(false);
+  const [questionsData, setQuestionsData] = useState([]);
+  const [answers, setAnswers] = useState([]);
+
+  function handleStart() {
+    setStart((prevState) => !prevState);
+  }
+
+  useEffect(() => {
+    fetch("https://opentdb.com/api.php?amount=6")
+      .then((res) => res.json())
+      .then((data) => {
+        setQuestionsData(
+          data.results.map((item) => {
+            console.log(item);
+            return { ...item, key: nanoid() };
+          })
+        );
+        setAnswers(
+          data.results.map((item) => {
+            console.log(item);
+            return item.incorrect_answers.map((answer) => {
+              return { ...answer, key: nanoid() };
+            });
+          })
+        );
+        console.log(answers);
+      });
+  }, [start]);
+
+  const elem = questionsData.map((item) => {
+    return (
+      <Question
+        question={item.question}
+        correct={item.correct_answer}
+        incorrect={item.incorrect_answers}
+        key={item.key}
+      />
+    );
+  });
+
+  const answersElement = answers.map((item) => {
+    return <Answer key={item.key} answer={item.answer} />;
+  });
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="app">
+      <span className="dot-right"></span>
+      <span className="dot-left"></span>
+      {start ? (
+        <div className="questions-section">
+          {elem} {answersElement}
+        </div>
+      ) : (
+        <StartPage handleStart={handleStart} />
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
