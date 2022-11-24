@@ -8,7 +8,6 @@ import { nanoid } from "nanoid";
 function App() {
   const [start, setStart] = useState(false);
   const [questionsData, setQuestionsData] = useState([]);
-  const [answers, setAnswers] = useState([]);
 
   function handleStart() {
     setStart((prevState) => !prevState);
@@ -20,21 +19,20 @@ function App() {
       .then((data) => {
         setQuestionsData(
           data.results.map((item) => {
-            console.log(item);
+            // console.log(item);
             return { ...item, key: nanoid() };
           })
         );
-        setAnswers(
-          data.results.map((item) => {
-            console.log(item);
-            return item.incorrect_answers.map((answer) => {
-              return { ...answer, key: nanoid() };
-            });
-          })
-        );
-        console.log(answers);
+        console.log(questionsData);
       });
   }, [start]);
+
+  function handleAnswer(e, type) {
+    console.log(e.target);
+    {
+      type ? console.log(type) : console.log("false");
+    }
+  }
 
   const elem = questionsData.map((item) => {
     return (
@@ -43,22 +41,23 @@ function App() {
         correct={item.correct_answer}
         incorrect={item.incorrect_answers}
         key={item.key}
+        handleAnswer={handleAnswer}
       />
     );
   });
 
-  const answersElement = answers.map((item) => {
-    return <Answer key={item.key} answer={item.answer} />;
-  });
+  // const answersElement = questionsData.map((item) =>
+  //   item.incorrect_answers.map((item) => {
+  //     return <Answer key={nanoid()} answer={item} type={false} />;
+  //   })
+  // );
 
   return (
     <div className="app">
       <span className="dot-right"></span>
       <span className="dot-left"></span>
       {start ? (
-        <div className="questions-section">
-          {elem} {answersElement}
-        </div>
+        <div className="questions-section">{elem}</div>
       ) : (
         <StartPage handleStart={handleStart} />
       )}
