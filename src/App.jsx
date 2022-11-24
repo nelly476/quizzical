@@ -23,16 +23,9 @@ function App() {
             return { ...item, key: nanoid() };
           })
         );
-        console.log(questionsData);
+        // console.log(questionsData);
       });
   }, [start]);
-
-  function handleAnswer(e, type) {
-    console.log(e.target);
-    {
-      type ? console.log(type) : console.log("false");
-    }
-  }
 
   const elem = questionsData.map((item) => {
     return (
@@ -41,7 +34,6 @@ function App() {
         correct={item.correct_answer}
         incorrect={item.incorrect_answers}
         key={item.key}
-        handleAnswer={handleAnswer}
       />
     );
   });

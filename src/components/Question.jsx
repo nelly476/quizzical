@@ -2,24 +2,46 @@ import React from "react";
 import { nanoid } from "nanoid";
 
 export default function Question(props) {
-  let answers = props.incorrect.map((item) => {
-    return { answer: item, isRight: "" };
-  });
+  const [answersData, setAnswersData] = React.useState([]);
 
-  answers.push({ answer: props.correct, isRight: "true" });
+  React.useEffect(() => {
+    setAnswersData(
+      props.incorrect.map((item) => {
+        return { answer: item, isRight: "", isHeld: false };
+      })
+    );
+    setAnswersData((prev) => [
+      ...prev,
+      { answer: props.correct, isRight: "true", isHeld: false },
+    ]);
+  }, [props.incorrect]);
 
-  const answerElem = answers.map((item) => {
+  console.log(answersData);
+
+  function handle() {
+    console.log("h");
+  }
+
+  // let answers = answersData.map((item) => {
+  //   return { answer: item, isRight: "" };
+  // });
+
+  // answers.push({ answer: props.correct, isRight: "true" });
+
+  const answerElem = answersData.map((item) => {
     return (
       <button
         key={nanoid()}
         right={item.isRight}
-        onClick={(e) => props.handleAnswer(e, item.isRight)}
+        onClick={handle}
         style={{ backgroundColor: item.isRight ? "green" : "red" }}
       >
         {item.answer}
       </button>
     );
   });
+
+  // (e) => props.handleAnswer(e, item.isRight)
 
   // const wrongAnswers = props.incorrect.map((item) => {
   //   return (
