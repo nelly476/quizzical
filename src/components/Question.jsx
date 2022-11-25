@@ -1,5 +1,6 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import { decode } from "html-entities";
 
 export default function Question(props) {
   const [answersData, setAnswersData] = React.useState([]);
@@ -14,7 +15,7 @@ export default function Question(props) {
       ...prev,
       { answer: props.correct, isRight: "true", isHeld: false, id: nanoid() },
     ]);
-  }, [props.incorrect]);
+  }, [props]);
 
   // console.log(answersData);
 
@@ -36,7 +37,7 @@ export default function Question(props) {
         onClick={() => handle(item.id)}
         style={{ backgroundColor: item.isHeld ? "#d6dbf5" : "" }}
       >
-        {item.answer}
+        {decode(item.answer)}
       </button>
     );
   });
@@ -50,7 +51,7 @@ export default function Question(props) {
 
   return (
     <div>
-      <h2>{props.question}</h2>
+      <h2>{decode(props.question)}</h2>
       <div className="answers--section">{answerElem}</div>
     </div>
   );

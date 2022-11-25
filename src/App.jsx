@@ -18,7 +18,6 @@ function App() {
       .then((data) => {
         setQuestionsData(
           data.results.map((item) => {
-            // console.log(item);
             return { ...item, key: nanoid() };
           })
         );
@@ -41,6 +40,7 @@ function App() {
     <div className="app">
       <span className="dot-right"></span>
       <span className="dot-left"></span>
+
       {start ? (
         <div className="questions-section">{elem}</div>
       ) : (
