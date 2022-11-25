@@ -53,11 +53,11 @@ body {
   color: white;
   font-weight: bold;
   font-size: 1rem;
-  cursor: pointer;
 }
 
-.start--btn:hover {
+button:hover {
   opacity: 0.85;
+  cursor: pointer;
 }
 
 .questions-section {
@@ -68,4 +68,21 @@ body {
   margin: 0 auto;
   width: 60%;
   padding-top: 2em;
+}
+
+.answers--section {
+  display: flex;
+  column-gap: 1.2em;
+}
+
+.answer--button {
+  background-color: #f5f7fb;
+  border: none;
+  padding: 0.6em 1.7em;
+  border-radius: 20px;
+  color: #293264;
+  font-weight: bold;
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
 }

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import StartPage from "./components/StartPage";
 import Question from "./components/Question";
-import Answer from "./components/Answer";
 import { nanoid } from "nanoid";
 
 function App() {
@@ -37,12 +36,6 @@ function App() {
       />
     );
   });
-
-  // const answersElement = questionsData.map((item) =>
-  //   item.incorrect_answers.map((item) => {
-  //     return <Answer key={nanoid()} answer={item} type={false} />;
-  //   })
-  // );
 
   return (
     <div className="app">

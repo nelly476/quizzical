@@ -7,63 +7,39 @@ export default function Question(props) {
   React.useEffect(() => {
     setAnswersData(
       props.incorrect.map((item) => {
-        return { answer: item, isRight: "", isHeld: false };
+        return { answer: item, isRight: "", isHeld: false, id: nanoid() };
       })
     );
     setAnswersData((prev) => [
       ...prev,
-      { answer: props.correct, isRight: "true", isHeld: false },
+      { answer: props.correct, isRight: "true", isHeld: false, id: nanoid() },
     ]);
   }, [props.incorrect]);
 
-  console.log(answersData);
+  // console.log(answersData);
 
-  function handle() {
-    console.log("h");
+  function handle(answerId) {
+    setAnswersData((prev) =>
+      prev.map((answer) => {
+        return answer.id === answerId ? { ...answer, isHeld: true } : answer;
+      })
+    );
   }
-
-  // let answers = answersData.map((item) => {
-  //   return { answer: item, isRight: "" };
-  // });
-
-  // answers.push({ answer: props.correct, isRight: "true" });
 
   const answerElem = answersData.map((item) => {
     return (
       <button
-        key={nanoid()}
+        className="answer--button"
+        id={item.id}
+        key={item.id}
         right={item.isRight}
-        onClick={handle}
-        style={{ backgroundColor: item.isRight ? "green" : "red" }}
+        onClick={() => handle(item.id)}
+        style={{ backgroundColor: item.isHeld ? "#d6dbf5" : "" }}
       >
         {item.answer}
       </button>
     );
   });
-
-  // (e) => props.handleAnswer(e, item.isRight)
-
-  // const wrongAnswers = props.incorrect.map((item) => {
-  //   return (
-  //     <button
-  //       key={nanoid()}
-  //       answer="wrong"
-  //       onClick={(e) => props.handleAnswer(e)}
-  //     >
-  //       {item}
-  //     </button>
-  //   );
-  // });
-
-  // const rightAnswer = (
-  //   <button
-  //     key={nanoid()}
-  //     answer="right"
-  //     onClick={(e) => props.handleAnswer(e)}
-  //   >
-  //     {props.correct}
-  //   </button>
-  // );
 
   // function shuffle(array) {
   //   for (let i = array.length - 1; i > 0; i--) {
@@ -75,10 +51,7 @@ export default function Question(props) {
   return (
     <div>
       <h2>{props.question}</h2>
-      {answerElem}
-      {/* {wrongAnswers}
-      {rightAnswer} */}
-      {/* {answers} */}
+      <div className="answers--section">{answerElem}</div>
     </div>
   );
 }
