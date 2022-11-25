@@ -1,24 +1,15 @@
 body,
 html {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 }
 
 body {
   background-color: #f5f7fb;
   margin: 0;
-
   align-items: center;
   color: #293264;
   font-family: "Inter", sans-serif;
-}
-
-.app {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
 }
 
 .dot-right,
@@ -50,7 +41,8 @@ body {
   width: 100%;
 }
 
-.start--btn {
+.start--btn,
+.check--button {
   padding: 0.8em 5em;
   background: #4d5b9e;
   border-radius: 15px;
@@ -58,6 +50,9 @@ body {
   color: white;
   font-weight: bold;
   font-size: 1rem;
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
 }
 
 button:hover {
@@ -65,7 +60,7 @@ button:hover {
   cursor: pointer;
 }
 
-.questions-section {
+.quiz--section {
   position: absolute;
   top: 0;
   left: 0;
@@ -90,4 +85,9 @@ button:hover {
   -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+.button--section {
+  text-align: center;
+  margin-top: 3em;
 }

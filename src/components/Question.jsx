@@ -15,6 +15,8 @@ export default function Question(props) {
       ...prev,
       { answer: props.correct, isRight: "true", isHeld: false, id: nanoid() },
     ]);
+
+    setAnswersData((prev) => shuffle(prev));
   }, [props]);
 
   // console.log(answersData);
@@ -25,6 +27,26 @@ export default function Question(props) {
         return answer.id === answerId ? { ...answer, isHeld: true } : answer;
       })
     );
+  }
+
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
   }
 
   const answerElem = answersData.map((item) => {
@@ -41,13 +63,6 @@ export default function Question(props) {
       </button>
     );
   });
-
-  // function shuffle(array) {
-  //   for (let i = array.length - 1; i > 0; i--) {
-  //     let j = Math.floor(Math.random() * (i + 1));
-  //     return ([array[i], array[j]] = [array[j], array[i]]);
-  //   }
-  // }
 
   return (
     <div>

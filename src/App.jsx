@@ -13,7 +13,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=6")
+    fetch("https://opentdb.com/api.php?amount=5")
       .then((res) => res.json())
       .then((data) => {
         setQuestionsData(
@@ -21,9 +21,9 @@ function App() {
             return { ...item, key: nanoid() };
           })
         );
-        // console.log(questionsData);
+        // console.log("h");
       });
-  }, [start]);
+  }, []);
 
   const elem = questionsData.map((item) => {
     return (
@@ -42,7 +42,12 @@ function App() {
       <span className="dot-left"></span>
 
       {start ? (
-        <div className="questions-section">{elem}</div>
+        <div className="quiz--section">
+          <div>{elem}</div>
+          <div className="button--section">
+            <button className="check--button">Check</button>
+          </div>
+        </div>
       ) : (
         <StartPage handleStart={handleStart} />
       )}
