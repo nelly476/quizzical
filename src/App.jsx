@@ -18,12 +18,52 @@ function App() {
       .then((data) => {
         setQuestionsData(
           data.results.map((item) => {
-            return { ...item, key: nanoid() };
+            const answersArr = item.incorrect_answers.map((i) => {
+              return {
+                answer: i,
+                isRight: false,
+                isHeld: false,
+                id: nanoid(),
+              };
+            });
+
+            answersArr.push({
+              answer: item.correct_answer,
+              isRight: true,
+              isHeld: false,
+              id: nanoid(),
+            });
+
+            return {
+              ...item,
+              key: nanoid(),
+              id: nanoid(),
+              answers: answersArr,
+            };
           })
         );
-        // console.log("h");
+        // console.log()
       });
   }, []);
+
+  function handleClick(questionId, answerId) {
+    // console.log(answerId, questionId);
+
+    setQuestionsData((prev) => {
+      return prev.map((item) => {
+        return item.id != questionId
+          ? item
+          : {
+              ...item,
+              answers: item.answers.map((answer) => {
+                return answer.id != answerId
+                  ? answer
+                  : { ...answer, isHeld: true };
+              }),
+            };
+      });
+    });
+  }
 
   const elem = questionsData.map((item) => {
     return (
@@ -32,9 +72,16 @@ function App() {
         correct={item.correct_answer}
         incorrect={item.incorrect_answers}
         key={item.key}
+        id={item.id}
+        answers={item.answers}
+        handleClick={handleClick}
       />
     );
   });
+
+  function checkAnswers() {
+    console.log(questionsData);
+  }
 
   return (
     <div className="app">
@@ -45,7 +92,9 @@ function App() {
         <div className="quiz--section">
           <div>{elem}</div>
           <div className="button--section">
-            <button className="check--button">Check</button>
+            <button className="check--button" onClick={checkAnswers}>
+              Check
+            </button>
           </div>
         </div>
       ) : (
