@@ -12,6 +12,26 @@ function App() {
     setStart((prevState) => !prevState);
   }
 
+  function shuffle(array) {
+    let currentIndex = array.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
+  }
+
   useEffect(() => {
     fetch("https://opentdb.com/api.php?amount=5")
       .then((res) => res.json())
@@ -23,6 +43,7 @@ function App() {
                 answer: i,
                 isRight: false,
                 isHeld: false,
+                isGreen: false,
                 id: nanoid(),
               };
             });
@@ -31,6 +52,7 @@ function App() {
               answer: item.correct_answer,
               isRight: true,
               isHeld: false,
+              isGreen: false,
               id: nanoid(),
             });
 
@@ -38,7 +60,7 @@ function App() {
               ...item,
               key: nanoid(),
               id: nanoid(),
-              answers: answersArr,
+              answers: shuffle(answersArr),
             };
           })
         );
@@ -47,8 +69,6 @@ function App() {
   }, []);
 
   function handleClick(questionId, answerId) {
-    // console.log(answerId, questionId);
-
     setQuestionsData((prev) => {
       return prev.map((item) => {
         return item.id != questionId
@@ -58,7 +78,7 @@ function App() {
               answers: item.answers.map((answer) => {
                 return answer.id != answerId
                   ? answer
-                  : { ...answer, isHeld: true };
+                  : { ...answer, isHeld: !answer.isHeld };
               }),
             };
       });
@@ -69,8 +89,6 @@ function App() {
     return (
       <Question
         question={item.question}
-        correct={item.correct_answer}
-        incorrect={item.incorrect_answers}
         key={item.key}
         id={item.id}
         answers={item.answers}
@@ -81,6 +99,18 @@ function App() {
 
   function checkAnswers() {
     console.log(questionsData);
+    setQuestionsData((prev) => {
+      return prev.map((item) => {
+        return {
+          ...item,
+          answers: item.answers.map((answer) => {
+            return answer.isRight
+              ? { ...answer, isGreen: true }
+              : { ...answer, isRed: true };
+          }),
+        };
+      });
+    });
   }
 
   return (
