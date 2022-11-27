@@ -61,6 +61,8 @@ function App() {
               isDisabled: false,
               answers: shuffle(answersArr),
               isChecked: false,
+              isAnswered: false,
+              isHighlighted: false,
             };
           })
         );
@@ -75,6 +77,7 @@ function App() {
           ? item
           : {
               ...item,
+              isAnswered: true,
               answers: item.answers.map((answer) => {
                 answer.isHeld = false;
                 return answer.id != answerId
@@ -96,6 +99,8 @@ function App() {
         handleClick={handleClick}
         isDisabled={item.isDisabled}
         isChecked={item.isChecked}
+        isAnswered={item.isAnswered}
+        isHighlighted={item.isHighlighted}
       />
     );
   });
@@ -103,14 +108,35 @@ function App() {
   function checkAnswers() {
     setQuestionsData((prev) => {
       return prev.map((item) => {
-        return {
-          ...item,
-          isDisabled: true,
-          isChecked: true,
-        };
+        function answered(i) {
+          return i.isAnswered;
+        }
+
+        if (prev.every(answered)) {
+          return {
+            ...item,
+            isDisabled: true,
+            isChecked: true,
+          };
+        } else if (!item.isAnswered) {
+          return {
+            ...item,
+            isHighlighted: true,
+          };
+        } else {
+          return item;
+        }
       });
     });
   }
+
+  // if (item.isAnswered) {
+  //   return {
+  //     ...item,
+  //     isDisabled: true,
+  //     isChecked: true,
+  //   };
+  // }
 
   return (
     <div className="app">

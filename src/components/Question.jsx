@@ -5,16 +5,22 @@ export default function Question(props) {
   const answerElem = props.answers.map((item) => {
     function getBackgroundColor() {
       if (props.isChecked) {
-        if (item.isRight && item.isHeld) {
-          return "green";
+        if (item.isRight && !item.isHeld) {
+          return "#94D7A2";
+        } else if (item.isRight && item.isHeld) {
+          return "#94D7A2";
         } else if (!item.isRight && item.isHeld) {
-          return "red";
-        } else if (item.isRight && !item.isHeld) {
-          return "red";
+          return "#F8BCBC";
         }
       }
       if (item.isHeld) {
         return "#d6dbf5";
+      }
+    }
+
+    function getButtonHighlight() {
+      if (props.isHighlighted) {
+        return "1px solid red";
       }
     }
 
@@ -24,7 +30,10 @@ export default function Question(props) {
         id={item.id}
         key={item.id}
         onClick={() => props.handleClick(props.id, item.id)}
-        style={{ backgroundColor: getBackgroundColor() }}
+        style={{
+          backgroundColor: getBackgroundColor(),
+          border: getButtonHighlight(),
+        }}
         disabled={props.isDisabled ? true : false}
       >
         {decode(item.answer)}
