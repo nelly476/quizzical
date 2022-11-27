@@ -76,6 +76,7 @@ function App() {
           : {
               ...item,
               answers: item.answers.map((answer) => {
+                answer.isHeld = false;
                 return answer.id != answerId
                   ? answer
                   : { ...answer, isHeld: !answer.isHeld };
