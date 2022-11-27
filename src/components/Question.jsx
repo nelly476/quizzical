@@ -4,18 +4,19 @@ import { decode } from "html-entities";
 export default function Question(props) {
   const answerElem = props.answers.map((item) => {
     function getBackgroundColor() {
-      if (item.isHeld && item.isGreen) {
-        return "green";
-      } else if (item.isHeld && item.isRed) {
-        return "red";
-      } else if (item.isHeld) {
+      if (props.isChecked) {
+        if (item.isRight && item.isHeld) {
+          return "green";
+        } else if (!item.isRight && item.isHeld) {
+          return "red";
+        } else if (item.isRight && !item.isHeld) {
+          return "red";
+        }
+      }
+      if (item.isHeld) {
         return "#d6dbf5";
       }
     }
-    // const styles = {
-
-    //   // backgroundColor: item.isHeld ? "#d6dbf5" : "",
-    // };
 
     return (
       <button
@@ -24,6 +25,7 @@ export default function Question(props) {
         key={item.id}
         onClick={() => props.handleClick(props.id, item.id)}
         style={{ backgroundColor: getBackgroundColor() }}
+        disabled={props.isDisabled ? true : false}
       >
         {decode(item.answer)}
       </button>

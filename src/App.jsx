@@ -43,7 +43,6 @@ function App() {
                 answer: i,
                 isRight: false,
                 isHeld: false,
-                isGreen: false,
                 id: nanoid(),
               };
             });
@@ -52,7 +51,6 @@ function App() {
               answer: item.correct_answer,
               isRight: true,
               isHeld: false,
-              isGreen: false,
               id: nanoid(),
             });
 
@@ -60,7 +58,9 @@ function App() {
               ...item,
               key: nanoid(),
               id: nanoid(),
+              isDisabled: false,
               answers: shuffle(answersArr),
+              isChecked: false,
             };
           })
         );
@@ -94,21 +94,19 @@ function App() {
         id={item.id}
         answers={item.answers}
         handleClick={handleClick}
+        isDisabled={item.isDisabled}
+        isChecked={item.isChecked}
       />
     );
   });
 
   function checkAnswers() {
-    console.log(questionsData);
     setQuestionsData((prev) => {
       return prev.map((item) => {
         return {
           ...item,
-          answers: item.answers.map((answer) => {
-            return answer.isRight
-              ? { ...answer, isGreen: true }
-              : { ...answer, isRed: true };
-          }),
+          isDisabled: true,
+          isChecked: true,
         };
       });
     });
