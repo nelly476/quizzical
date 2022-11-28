@@ -8,6 +8,11 @@ function App() {
   const [start, setStart] = useState(false);
   const [questionsData, setQuestionsData] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
+  const [game, setGame] = useState(false);
+
+  function handleStart() {
+    setStart((prevState) => !prevState);
+  }
 
   useEffect(() => {
     setCorrectAnswers(
@@ -28,10 +33,6 @@ function App() {
         }, 0)
     );
   }, [questionsData]);
-
-  function handleStart() {
-    setStart((prevState) => !prevState);
-  }
 
   function shuffle(array) {
     let currentIndex = array.length,
@@ -87,6 +88,7 @@ function App() {
             };
           })
         );
+        console.log(start);
       });
   }, [start]);
 
@@ -155,12 +157,16 @@ function App() {
     return i.isChecked;
   }
 
+  function startGame() {
+    setGame((prev) => !prev);
+  }
+
   return (
     <div className="app">
       <span className="dot-right"></span>
       <span className="dot-left"></span>
 
-      {start ? (
+      {game ? (
         <div className="quiz--section">
           <div>{elem}</div>
           <div className="button--section">
@@ -181,7 +187,7 @@ function App() {
           </div>
         </div>
       ) : (
-        <StartPage handleStart={handleStart} />
+        <StartPage startGame={startGame} />
       )}
     </div>
   );

@@ -70,7 +70,7 @@ button:hover {
   right: 0;
   margin: 0 auto;
   width: 60%;
-  padding-top: 2em;
+  padding-top: 1em;
 }
 
 .answers--section {
@@ -92,7 +92,7 @@ button:hover {
 
 .button--section {
   text-align: center;
-  margin-top: 3em;
+  margin: 3em;
 }
 
 @media (max-width: 650px) {
@@ -102,7 +102,6 @@ button:hover {
 
   .quiz--section {
     width: 95%;
-    padding-top: 2em;
     text-align: center;
   }
 
@@ -120,10 +119,5 @@ button:hover {
 
   .question--section {
     margin-bottom: 2em;
-  }
-
-  .check--button,
-  .restart--button {
-    margin-bottom: 4em;
   }
 }
