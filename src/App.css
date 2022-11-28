@@ -73,6 +73,10 @@ button:hover {
   padding-top: 1em;
 }
 
+.question--section {
+  margin-bottom: 2.5em;
+}
+
 .answers--section {
   display: flex;
   column-gap: 1.2em;
@@ -116,9 +120,5 @@ button:hover {
   .answer--button {
     width: 80%;
     padding: 0.9em 1.7em;
-  }
-
-  .question--section {
-    margin-bottom: 2em;
   }
 }
