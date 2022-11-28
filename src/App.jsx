@@ -7,6 +7,57 @@ import { nanoid } from "nanoid";
 function App() {
   const [start, setStart] = useState(false);
   const [questionsData, setQuestionsData] = useState([]);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
+
+  useEffect(() => {
+    setCorrectAnswers(
+      questionsData
+        .map((item) => {
+          return !item.isAnswered
+            ? 0
+            : item.answers
+                .map((answer) => {
+                  return answer.isRight && answer.isHeld ? 1 : 0;
+                })
+                .reduce((total, num) => {
+                  return total + num;
+                }, 0);
+        })
+        .reduce((total, num) => {
+          return total + num;
+        }, 0)
+    );
+
+    console.log(correctAnswers);
+  }, [questionsData]);
+
+  //   // const n = questionsData.forEach((el) => {
+  //   //   el.answers.filter((el2) => {
+  //   //     return el2.isHeld && el2.isRight;
+  //   //   });
+  //   // });
+  //   console.log(correctAnswers);
+  // }, [questionsData]);
+
+  //   console.log(correctAnswers);
+  // }, [questionsData]);
+
+  // setQuestionsData((prev) => {
+  //   return prev.map((item) => {
+  //     return item.id != questionId
+  //       ? item
+  //       : {
+  //           ...item,
+  //           isAnswered: true,
+  //           answers: item.answers.map((answer) => {
+  //             answer.isHeld = false;
+  //             return answer.id != answerId
+  //               ? answer
+  //               : { ...answer, isHeld: !answer.isHeld };
+  //           }),
+  //         };
+  //   });
+  // });
 
   function handleStart() {
     setStart((prevState) => !prevState);
@@ -117,6 +168,7 @@ function App() {
             ...item,
             isDisabled: true,
             isChecked: true,
+            isHighlighted: false,
           };
         } else if (!item.isAnswered) {
           return {
@@ -130,13 +182,9 @@ function App() {
     });
   }
 
-  // if (item.isAnswered) {
-  //   return {
-  //     ...item,
-  //     isDisabled: true,
-  //     isChecked: true,
-  //   };
-  // }
+  function areAllChecked(i) {
+    return i.isChecked;
+  }
 
   return (
     <div className="app">
@@ -147,9 +195,13 @@ function App() {
         <div className="quiz--section">
           <div>{elem}</div>
           <div className="button--section">
-            <button className="check--button" onClick={checkAnswers}>
-              Check
-            </button>
+            {questionsData.every(areAllChecked) ? (
+              <p>You scored {correctAnswers}/5 correct answers</p>
+            ) : (
+              <button className="check--button" onClick={checkAnswers}>
+                Check
+              </button>
+            )}
           </div>
         </div>
       ) : (
