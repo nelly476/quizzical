@@ -42,7 +42,8 @@ body {
 }
 
 .start--btn,
-.check--button {
+.check--button,
+.restart--button {
   padding: 0.8em 5em;
   background: #4d5b9e;
   border-radius: 15px;

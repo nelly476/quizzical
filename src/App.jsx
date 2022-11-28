@@ -27,37 +27,7 @@ function App() {
           return total + num;
         }, 0)
     );
-
-    console.log(correctAnswers);
   }, [questionsData]);
-
-  //   // const n = questionsData.forEach((el) => {
-  //   //   el.answers.filter((el2) => {
-  //   //     return el2.isHeld && el2.isRight;
-  //   //   });
-  //   // });
-  //   console.log(correctAnswers);
-  // }, [questionsData]);
-
-  //   console.log(correctAnswers);
-  // }, [questionsData]);
-
-  // setQuestionsData((prev) => {
-  //   return prev.map((item) => {
-  //     return item.id != questionId
-  //       ? item
-  //       : {
-  //           ...item,
-  //           isAnswered: true,
-  //           answers: item.answers.map((answer) => {
-  //             answer.isHeld = false;
-  //             return answer.id != answerId
-  //               ? answer
-  //               : { ...answer, isHeld: !answer.isHeld };
-  //           }),
-  //         };
-  //   });
-  // });
 
   function handleStart() {
     setStart((prevState) => !prevState);
@@ -117,9 +87,8 @@ function App() {
             };
           })
         );
-        // console.log()
       });
-  }, []);
+  }, [start]);
 
   function handleClick(questionId, answerId) {
     setQuestionsData((prev) => {
@@ -196,7 +165,14 @@ function App() {
           <div>{elem}</div>
           <div className="button--section">
             {questionsData.every(areAllChecked) ? (
-              <p>You scored {correctAnswers}/5 correct answers</p>
+              <span>
+                <p>
+                  <strong>You scored {correctAnswers}/5 correct answers</strong>
+                </p>
+                <button className="restart--button" onClick={handleStart}>
+                  Play again
+                </button>
+              </span>
             ) : (
               <button className="check--button" onClick={checkAnswers}>
                 Check
