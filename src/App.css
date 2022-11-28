@@ -121,4 +121,9 @@ button:hover {
   .question--section {
     margin-bottom: 2em;
   }
+
+  .check--button,
+  .restart--button {
+    margin-bottom: 4em;
+  }
 }
