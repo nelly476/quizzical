@@ -92,7 +92,8 @@ button:hover {
 
 .button--section {
   text-align: center;
-  margin: 3em;
+  margin-top: 2em;
+  margin-bottom: 3em;
 }
 
 @media (max-width: 650px) {
