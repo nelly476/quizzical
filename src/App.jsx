@@ -88,7 +88,6 @@ function App() {
             };
           })
         );
-        console.log(formData.category);
       });
   }, [formData]);
 
@@ -193,7 +192,12 @@ function App() {
           <h1>Quizzical</h1>
           <form className="form--section">
             <label htmlFor="category">Choose the category</label>
-            <select name="category" id="category" onChange={handleChange}>
+            <select
+              name="category"
+              id="category"
+              onChange={handleChange}
+              className="category--select"
+            >
               <option value="9">General knowledge</option>
               <option value="10">Entertainment: Books</option>
               <option value="11">Entertainment: Film</option>

@@ -107,6 +107,11 @@ button:hover {
   margin-bottom: 2em;
 }
 
+select {
+  height: 2em;
+  font-size: 1.1rem;
+}
+
 @media (max-width: 650px) {
   .start-page {
     font-size: 1.7rem;
