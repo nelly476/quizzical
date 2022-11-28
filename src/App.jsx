@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import StartPage from "./components/StartPage";
+// import StartPage from "./components/StartPage";
 import Question from "./components/Question";
 import { nanoid } from "nanoid";
 
 function App() {
-  const [start, setStart] = useState(false);
   const [questionsData, setQuestionsData] = useState([]);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [game, setGame] = useState(false);
-
-  function handleStart() {
-    setStart((prevState) => !prevState);
-  }
+  const [formData, setFormData] = useState({ category: 9 });
 
   useEffect(() => {
     setCorrectAnswers(
@@ -54,8 +50,12 @@ function App() {
     return array;
   }
 
+  function startGame() {
+    setGame((prev) => !prev);
+  }
+
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=5")
+    fetch(`https://opentdb.com/api.php?amount=5&category=${formData.category}`)
       .then((res) => res.json())
       .then((data) => {
         setQuestionsData(
@@ -88,9 +88,9 @@ function App() {
             };
           })
         );
-        console.log(start);
+        console.log(formData.category);
       });
-  }, [start]);
+  }, [formData]);
 
   function handleClick(questionId, answerId) {
     setQuestionsData((prev) => {
@@ -157,8 +157,10 @@ function App() {
     return i.isChecked;
   }
 
-  function startGame() {
-    setGame((prev) => !prev);
+  function handleChange(e) {
+    setFormData({
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
@@ -175,7 +177,7 @@ function App() {
                 <p>
                   <strong>You scored {correctAnswers}/5 correct answers</strong>
                 </p>
-                <button className="restart--button" onClick={handleStart}>
+                <button className="restart--button" onClick={startGame}>
                   Play again
                 </button>
               </span>
@@ -187,7 +189,23 @@ function App() {
           </div>
         </div>
       ) : (
-        <StartPage startGame={startGame} />
+        <div className="start-page">
+          <h1>Quizzical</h1>
+          <form className="form--section">
+            <label htmlFor="category">Choose the category</label>
+            <select name="category" id="category" onChange={handleChange}>
+              <option value="9">General knowledge</option>
+              <option value="10">Entertainment: Books</option>
+              <option value="11">Entertainment: Film</option>
+              <option value="12">Entertainment: Music</option>
+              <option value="26">Celebrities</option>
+            </select>
+          </form>
+
+          <button className="start--btn" onClick={startGame}>
+            Start quiz
+          </button>
+        </div>
       )}
     </div>
   );

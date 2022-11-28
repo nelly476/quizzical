@@ -100,6 +100,13 @@ button:hover {
   margin-bottom: 3em;
 }
 
+.form--section {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5em;
+  margin-bottom: 2em;
+}
+
 @media (max-width: 650px) {
   .start-page {
     font-size: 1.7rem;
