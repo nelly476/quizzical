@@ -42,7 +42,7 @@ export default function Question(props) {
   });
 
   return (
-    <div>
+    <div className="question--section">
       <h2>{decode(props.question)}</h2>
       <div className="answers--section">{answerElem}</div>
     </div>

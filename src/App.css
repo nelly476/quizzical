@@ -10,6 +10,7 @@ body {
   align-items: center;
   color: #293264;
   font-family: "Inter", sans-serif;
+  overflow-x: hidden;
 }
 
 .dot-right,
@@ -18,18 +19,17 @@ body {
   height: 51vh;
   width: 54vh;
   position: absolute;
-  overflow: hidden;
 }
 
 .dot-right {
-  right: -10em;
-  top: -10em;
+  right: -8em;
+  top: -8em;
   background: #fffad1;
 }
 
 .dot-left {
   left: -8em;
-  bottom: -8em;
+  bottom: 0;
   background: #deebf8;
 }
 
@@ -101,7 +101,7 @@ button:hover {
   }
 
   .quiz--section {
-    width: 100%;
+    width: 95%;
     padding-top: 2em;
     text-align: center;
   }
@@ -116,5 +116,9 @@ button:hover {
   .answer--button {
     width: 80%;
     padding: 0.9em 1.7em;
+  }
+
+  .question--section {
+    margin-bottom: 2em;
   }
 }
